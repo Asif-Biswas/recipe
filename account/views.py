@@ -12,6 +12,7 @@ from django.contrib import messages
 from datetime import timedelta
 from django.conf import settings
 from django.template.loader import render_to_string
+import json
 
 # Create your views here.
 
@@ -34,7 +35,7 @@ def handleLogin(request):
 
         if user is not None:
             login(request, user)
-            return redirect('home')
+            return redirect('main:home')
         else:
             messages.error(request, 'Invalid username or password')
             return render(request, 'account/login.html')
@@ -308,4 +309,108 @@ def resetPassword(request):
         return redirect('account:login')
 
     return render(request, 'account/forgetPassword.html')
+
+
+@login_required(login_url='account:login')
+def profile(request):
+    userProfile = UserProfile.objects.get(user=request.user)
+    context = {
+        'profilePage': True,
+        'title': 'Profile',
+        'userProfile': userProfile,
+    }
+    return render(request, 'account/profile.html', context)
+
+
+def editProfile(request):
+    if request.method == 'POST':
+        fullname = request.POST.get('fullname')
+        username = request.POST.get('username')
+        bio = request.POST.get('bio')
+        profile_picture = request.FILES.get('profile-picture')
+        facebook_link = request.POST.get('facebook-link')
+        twitter_link = request.POST.get('twitter-link')
+        instagram_link = request.POST.get('instagram-link')
+        youtube_link = request.POST.get('youtube-link')
+        website_link = request.POST.get('website-link')
+        social_media_links = {
+            'facebook': facebook_link,
+            'twitter': twitter_link,
+            'instagram': instagram_link,
+            'youtube': youtube_link,
+        }
+
+        # validate username
+        if User.objects.filter(username=username).exists():
+            user = User.objects.get(username=username)
+            if user != request.user:
+                messages.error(request, 'Username already exists')
+                userProfile = UserProfile.objects.get(user=request.user)
+                context = {
+                    'profilePage': True,
+                    'title': 'Profile',
+                    'userProfile': userProfile,
+                }
+                return render(request, 'account/profile.html', context)
+
+        # username can contain only letters, numbers and underscores
+        if not re.match(r'^[\w.@+-]+$', username):
+            userProfile = UserProfile.objects.get(user=request.user)
+            messages.error(request, 'Username can contain only letters, numbers and underscores')
+            context = {
+                'profilePage': True,
+                'title': 'Profile',
+                'userProfile': userProfile,
+            }
+            return render(request, 'account/profile.html', context)
+
+        # fullname can contain only letters and spaces
+        if not re.match(r'^[a-zA-Z ]+$', fullname):
+            userProfile = UserProfile.objects.get(user=request.user)
+            messages.error(request, 'Fullname can contain only letters and spaces')
+            context = {
+                'profilePage': True,
+                'title': 'Profile',
+                'userProfile': userProfile,
+            }
+            return render(request, 'account/profile.html', context)
+
+        # update user
+        user = request.user
+        user.username = username
+        user.first_name = fullname.split(' ')[0]
+        user.last_name = ' '.join(fullname.split(' ')[1:])
+        user.save()
+
+        # update user profile
+        userProfile = UserProfile.objects.get(user=request.user)
+        userProfile.full_name = fullname
+        userProfile.bio = bio
+        userProfile.website_link = website_link
+        userProfile.social_media_links = json.dumps(social_media_links)
+        if profile_picture:
+            userProfile.profile_picture = profile_picture
+        userProfile.save()
+
+        messages.success(request, 'Profile updated successfully')
+        context = {
+            'profilePage': True,
+            'title': 'Profile',
+            'userProfile': userProfile,
+        }
+        return render(request, 'account/profile.html', context)
+
+    return redirect('account:profile')
+
+
+def userProfile(request, username):
+    user = User.objects.get(username=username)
+    userProfile = UserProfile.objects.get(user=user)
+    context = {
+        'userProfile': userProfile,
+        'title': 'Profile',
+    }
+    return render(request, 'account/userProfile.html', context)
+
+
 
