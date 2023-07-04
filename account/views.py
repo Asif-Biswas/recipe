@@ -410,7 +410,7 @@ def userProfile(request, username):
         'userProfile': userProfile,
         'title': 'Profile',
     }
-    return render(request, 'account/userProfile.html', context)
+    return render(request, 'account/profile.html', context)
 
 
 

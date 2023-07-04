@@ -5,16 +5,18 @@
          <a href="#" style="font-size: 24px; font-weight: bold; font-family: Arial, Helvetica, sans-serif; color: black;"><img src="{% static 'images/chef.png' %}" class="logo">CHEF RECIPES</a>
       </nav>
       <nav class="navigation">
-    <ul>   
-            <li><a href="#">RECIPES</a></li>
-            <li><a href="#">CATEGORIES</a></li>
-            <li><a href="#">VIDEOS</a></li>
-    </ul>
+        <ul>   
+                <li><a href="#">RECIPES</a></li>
+                <li><a href="#">CATEGORIES</a></li>
+                <li><a href="#">CREATE</a></li>
+        </ul>
       </nav>
+      {% if not request.user.is_authenticated %}
       <nav class="login-area">
-          <button class="login"><a href="#">LOGIN</a></button>
-          <button class="register"><a href="#">REGISTER</a></button>
+          <button class="login"><a href="{% url 'account:login' %}">LOGIN</a></button>
+          <button class="register"><a href="{% url 'account:signup' %}">REGISTER</a></button>
       </nav>
+      {% endif %}
   </section>
 </header>
 
