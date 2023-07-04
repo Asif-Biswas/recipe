@@ -14,66 +14,22 @@
 	
 	<section class="wrapper product">
 		<h2 class="section-name">our delicious collections</h2>
-		<article class="card featuredd">
-			<div class="box"><img src="http://img.sndimg.com/food/image/upload/w_614,h_461/v1/img/recipes/36/78/07/picgLdb1z.jpg"></div>
-			<header class="card-content">
-				<span class="card-category chicken">food category</span>
-				<span class="card-header">recipe name</span>
-				<span class="card-desc">recipe short description goes here.</span>
-			</header>
-			<footer class="card-content">
-				<div class="contributor"><span class="contributor-name">by <a href="#">Bryan</a></span></div>
-				<div class="bookmark"></div>
-			</footer>
-		</article>
-		<article class="card">
-			<div class="box"><img src="http://img.sndimg.com/food/image/upload/w_614,h_461/v1/img/recipes/36/78/07/picgLdb1z.jpg"></div>
-			<header class="card-content">
-				<span class="card-category chicken">food category</span>
-				<span class="card-header">recipe name</span>
-				<span class="card-desc">recipe short description goes here.</span>
-			</header>
-			<footer class="card-content">
-				<div class="contributor"><span class="contributor-name">by <a href="#">Bryan</a></span></div>
-				<div class="bookmark"></div>
-			</footer>
-		</article>
-		<article class="card">
-			<div class="box"><img src="http://img.sndimg.com/food/image/upload/w_614,h_461/v1/img/recipes/36/78/07/picgLdb1z.jpg"></div>
-			<header class="card-content">
-				<span class="card-category chicken">food category</span>
-				<span class="card-header">recipe name</span>
-				<span class="card-desc">recipe short description goes here.</span>
-			</header>
-			<footer class="card-content">
-				<div class="contributor"><span class="contributor-name">by <a href="#">Bryan</a></span></div>
-				<div class="bookmark"></div>
-			</footer>
-		</article>
-		<article class="card">
-			<div class="box"><img src="http://img.sndimg.com/food/image/upload/w_614,h_461/v1/img/recipes/36/78/07/picgLdb1z.jpg"></div>
-			<header class="card-content">
-				<span class="card-category chicken">food category</span>
-				<span class="card-header">recipe name</span>
-				<span class="card-desc">recipe short description goes here.</span>
-			</header>
-			<footer class="card-content">
-				<div class="contributor"><span class="contributor-name">by <a href="#">Bryan</a></span></div>
-				<div class="bookmark"></div>
-			</footer>
-		</article>
-		<article class="card">
-			<div class="box"><img src="http://img.sndimg.com/food/image/upload/w_614,h_461/v1/img/recipes/36/78/07/picgLdb1z.jpg"></div>
-			<header class="card-content">
-				<span class="card-category chicken">food category</span>
-				<span class="card-header">recipe name</span>
-				<span class="card-desc">recipe short description goes here.</span>
-			</header>
-			<footer class="card-content">
-				<div class="contributor"><span class="contributor-name">by <a href="#">Bryan</a></span></div>
-				<div class="bookmark"></div>
-			</footer>
-		</article>
+		{% for recipe in recipes %}
+			<article class="card featuredd" onclick="window.location.href='{% url 'main:details' recipe.id %}'" style="cursor: pointer;">
+				<div class="box"><img style="height: 145px; min-width: 218px;" src="{{recipe.image.url}}"></div>
+				<header class="card-content">
+					{% for tag in recipe.tags.all %}
+						<span class="card-category chicken">{{tag.name}}</span>
+					{% endfor %}
+					<span class="card-header">{{recipe.subject|truncatechars:30}}</span>
+					<span class="card-desc">{{recipe.description|truncatechars:80}}</span>
+				</header>
+				<footer class="card-content d-flex justify-content-between">
+					<div class="contributor"><span class="contributor-name">by <a href="#">{{recipe.created_by.username}}</a></span></div>
+					<div class="bookmark"><i class="fas fa-heart me-1"></i>{{recipe.liked_by.all.count}}</div>
+				</footer>
+			</article>
+		{% endfor %}
 	</section>
 </main>
 

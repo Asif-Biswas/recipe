@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 import re
 from django.contrib.auth.decorators import login_required
 from .models import UserProfile, OTPVerification
+from main.models import Recipe
 from django.core.mail import send_mail
 import random
 from django.utils import timezone
@@ -318,6 +319,7 @@ def profile(request):
         'profilePage': True,
         'title': 'Profile',
         'userProfile': userProfile,
+        'recipes': Recipe.objects.filter(created_by=request.user),
     }
     return render(request, 'account/profile.html', context)
 
