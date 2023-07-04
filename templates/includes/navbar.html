@@ -1,0 +1,33 @@
+{% load static %}
+<header>
+  <section class="wrapper nav-flex">
+      <nav>
+         <a href="#" style="font-size: 24px; font-weight: bold; font-family: Arial, Helvetica, sans-serif; color: black;"><img src="{% static 'images/chef.png' %}" class="logo">CHEF RECIPES</a>
+      </nav>
+      <nav class="navigation">
+    <ul>   
+            <li><a href="#">RECIPES</a></li>
+            <li><a href="#">CATEGORIES</a></li>
+            <li><a href="#">VIDEOS</a></li>
+    </ul>
+      </nav>
+      <nav class="login-area">
+          <button class="login"><a href="#">LOGIN</a></button>
+          <button class="register"><a href="#">REGISTER</a></button>
+      </nav>
+  </section>
+</header>
+
+
+{% if messages %}
+<div class="my-2">
+    {% for message in messages %}
+    <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+      <strong>{{ message }}</strong>
+      {% comment %} <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button> {% endcomment %}
+    </div>
+    {% endfor %}
+  </div>
+{% endif %}

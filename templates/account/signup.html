@@ -1,0 +1,59 @@
+{% extends 'includes/base.html' %}
+{% load static %}
+{% block body %}
+
+
+<div class="container my-5">
+  <form class="border p-3" style="width: 100%; max-width: 600px; margin: auto; " action="{% url 'account:signup' %}" method="POST">
+    {% csrf_token %}
+    <h1 class="text-center mb-4">Sign up</h1>
+    <!-- Username input -->
+    <div class="form-outline mb-4">
+      <label class="form-label" for="form2Example1">Username</label>
+      <input name="username" type="text" id="form2Example1" class="form-control" placeholder="Enter your username" />
+    </div>
+
+    <!-- Email input -->
+    <div class="form-outline mb-4">
+      <label class="form-label" for="form2Example12">Email</label>
+      <input name="email" type="email" id="form2Example12" class="form-control" placeholder="Enter your email" />
+    </div>
+
+    <!-- Full name input -->
+    <div class="form-outline mb-4">
+      <label class="form-label" for="form2Example23">Full name</label>
+      <input name="full-name" type="text" id="form2Example23" class="form-control" placeholder="Enter your full name" />
+    </div>
+  
+    <!-- Password input -->
+    <div class="form-outline mb-4">
+      <label class="form-label" for="form2Example2">Password</label>
+      <input name="password" type="password" id="form2Example2" class="form-control" />
+    </div>
+
+    <!-- Repeat Password input -->
+    <div class="form-outline mb-4">
+      <label class="form-label" for="form2Example2">Repeat Password</label>
+      <input name="password2" type="password" id="form2Example2" class="form-control" />
+    </div>
+  
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+  
+  
+    <!-- Register buttons -->
+    <div class="text-center">
+      <p>Already have an account? <a href="{% url 'account:login' %}">Log in</a></p>
+      
+    </div>
+</form>
+</div>
+
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+{% endblock %}

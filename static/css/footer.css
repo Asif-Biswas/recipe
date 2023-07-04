@@ -1,0 +1,22 @@
+
+.footer{
+    color:#fff;
+    background-color: #570d0d;
+  }
+  
+  .list-style{
+    list-style-type:none!important;
+    cursor:pointer;
+    font-size:.75rem;
+    opacity:.8;
+  }
+  .copy-right{
+    font-size:.75rem;
+    opacity:.8;
+  }
+  .Analyst {
+    width: 87.7px;
+    height: 23.7px;
+    margin: 10.7px 0 5.2px 10.2px;
+    color: #fff;
+  }
