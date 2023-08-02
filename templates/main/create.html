@@ -1,0 +1,96 @@
+{% extends 'includes/base.html' %}
+{% load static %}
+{% block body %}
+
+
+<div class="mb-5 mx-2">
+    <div style="width: 100%; max-width: 825px; margin: auto;" class="card p-3">
+        <h1 style="margin: 16px">Create a Recipe</h1>
+        <div style="margin: 8px;">
+            <form action="{% url 'main:create' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group mt-2">
+                  <label for="title">Subject</label>
+                  <input required type="text" name="subject" class="form-control" id="title" placeholder="Enter title">
+                </div>
+                <div class="form-group mt-2">
+                  <label for="description">Description</label>
+                  <textarea class="form-control" name="description" id="description" rows="3"></textarea>
+                </div>
+                <div class="form-group mt-2">
+                    <label for="instructions">Instructions</label>
+                    <div>
+                        {{ form.media }}
+                        {{ form.instructions }}
+                    </div>
+                    
+                  </div>
+                  <div class="form-group mt-2">
+                    <label for="end_date">Image <span style="font-size: 10px; color: gray;">(220px X 150px)</span></label>
+                    <input required type="file" name="image" class="form-control" id="image" accept="image/*">
+                  </div>
+                  <div class="form-group mt-2">
+                    <label for="end_date">Tags</label>
+                    <div class="my-2" id="tags"></div>
+                    <input type="text" oninput="handleOptionSelection(event)" class="form-control" id="tags-input" placeholder="Enter tags" list="suggestion">
+                    <small class="form-text text-muted">Press enter to add a tag</small>
+                    <datalist id="suggestion">
+                        {% for tag in tags %}
+                        <option value="{{ tag.name }}">
+                        {% endfor %}
+                    </datalist>
+                    
+                    <input required type="hidden" name="tags" id="tags-hidden">
+                </div>
+
+                <div class="form-group mt-2">
+                    <label for="Public">Public</label>
+                    <input type="checkbox" name="public" id="public" checked>
+                </div>
+                    
+                    
+                  </div>
+
+                  <br/>
+                <button type="submit" class="btn btn-primary px-3">Create</button>
+              </form>
+
+
+            <!--  -->
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    const tags = document.querySelector('#tags');
+    const tagsInput = document.querySelector('#tags-input');
+    const suggestion = document.querySelector('#suggestion');
+    
+    function handleOptionSelection(event) {
+        const value = event.target.value;
+        const option = document.querySelector(`option[value="${value}"]`);
+        if (option) {
+            tags.innerHTML += `<span class="badge bg-primary mx-1">${value}</span>`;
+            event.target.value = '';
+            const tagsHidden = document.querySelector('#tags-hidden');
+            tagsHidden.value += `${value},`;
+        }
+    }
+
+    tagsInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            const value = event.target.value;
+            tags.innerHTML += `<span class="badge bg-primary mx-1">${value}</span>`;
+            event.target.value = '';
+            const tagsHidden = document.querySelector('#tags-hidden');
+            tagsHidden.value += `${value},`;
+        }
+    })
+
+
+</script>
+
+{% endblock %}

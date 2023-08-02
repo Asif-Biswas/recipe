@@ -1,0 +1,42 @@
+{% extends 'includes/base.html' %}
+{% load static %}
+{% block body %}
+
+
+<main>
+	<section class="jumbo">
+	<h1>what's cooking today?</h1>
+	<div class="search">
+	<input type="search" placeholder="find a recipe">
+		<button label="FIND">FIND</button>
+	</div>
+	</section>
+	
+	<section class="wrapper product">
+		<h2 class="section-name">our delicious collections</h2>
+		{% for recipe in recipes %}
+			<article class="card featuredd" onclick="window.location.href='{% url 'main:details' recipe.id %}'" style="cursor: pointer;">
+				<div class="box"><img style="height: 145px; min-width: 218px;" src="{{recipe.image.url}}"></div>
+				<header class="card-content">
+					{% for tag in recipe.tags.all %}
+						<span class="card-category chicken">{{tag.name}}</span>
+					{% endfor %}
+					<span class="card-header">{{recipe.subject|truncatechars:30}}</span>
+					<span class="card-desc">{{recipe.description|truncatechars:80}}</span>
+				</header>
+				<footer class="card-content d-flex justify-content-between">
+					<div class="contributor"><span class="contributor-name">by <a href="#">{{recipe.created_by.username}}</a></span></div>
+					<div class="bookmark"><i class="fas fa-heart me-1"></i>{{recipe.liked_by.all.count}}</div>
+				</footer>
+			</article>
+		{% endfor %}
+	</section>
+</main>
+
+<footer>
+	<section class="wrapper">
+        <nav>
+        </nav>
+    </section>
+</footer>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'includes/base.html' %}
+{% load static %}
+{% block body %}
+
+
+<div class="container" style="max-width: 1000px; width: 100%; margin: auto; padding-top: 36px;">
+  
+    <div class="cs-blog-detail">
+        <h2 style="color: #000; margin-bottom: 16px;">{{recipe.subject}}</h2>
+        <p>{{recipe.description}}</p>
+        <div class="cs-main-post">
+            <figure><img alt="image" src="{{recipe.image.url}}"></figure>
+        </div>
+        <div class="cs-post-title">
+            <div class="cs-author">
+                <figure>
+                    <a href=""><img width="32" height="32" {% if recipe.user_profile.profile_picture %}src="{{recipe.user_profile.profile_picture}}" {% else %}src="{% static 'images/cheficon.png' %}" {% endif %} class="avatar avatar-32 photo" alt=""></a>
+                </figure>
+                <div class="cs-text">
+                    <a href="">{{recipe.user_profile.full_name}} <span style="font-size: 12px; color: gray;">@{{recipe.created_by.username}}</span></a>
+                </div>
+            </div>
+            <div class="post-option">
+               
+                <span class="post-date"><a href="#">
+                    <i class="far fa-calendar-alt"></i>
+                    {{recipe.created_at|date:"F d, Y"}}
+                </a></span>
+                <span class="post-comment"><a href="#"><i class="fas fa-heart"></i>{{recipe.liked_by.all.count}} Likes</a></span>
+            </div>
+        </div>
+        <div class="cs-post-option-panel">
+            <div class="rich-editor-text">
+                <p>{{recipe.instructions|safe}}</p>
+            </div>
+        </div>
+        <div class="cs-tags">
+            <div class="tags">
+                <span>Tags</span>
+                <ul>
+                    {% for tag in recipe.tags.all %}
+                        <li><a rel="tag" href="#">
+                            {{tag.name}}
+                        </a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+          
+        </div>
+       
+    </div>
+</div>
+
+{% endblock %}
