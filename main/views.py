@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import RecipeForm
 from .models import Tag, Recipe
 from django.shortcuts import get_object_or_404
+from account.models import UserProfile
 
 # Create your views here.
 
@@ -48,3 +49,12 @@ def create(request):
     return render(request, 'main/create.html', {'form': form, 'tags': tags})
 
 
+
+def tags(request):
+    tagList = Tag.objects.all()
+
+    return render(request, 'main/tags.html', {'tags': tagList})
+
+def chefs(request):
+    chefList = UserProfile.objects.all()
+    return render(request, 'main/chefs.html', {"chefs" : chefList})
