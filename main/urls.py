@@ -8,5 +8,6 @@ urlpatterns = [
     path('details/<int:id>/', views.details, name='details'),
     path('create', views.create, name='create'),
     path('tags', views.tags, name='tags'),
-    path('chefs', views.chefs, name='chef'),
+    path('tags/<str:tag>', views.tagsearch, name='tags'),
+    path('chefs', views.chefs, name='chefs'),
 ]

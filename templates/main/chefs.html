@@ -11,7 +11,7 @@
             <div style="width: 100%; height: 200px; background-image: url('{{i.profile_picture.url}}'); background-size: cover;">
             </div>
             <div class="card-body">
-              <a href=""><h5 class="card-title">{{i.full_name}}</h5></a>
+              <a href="{% url 'account:profile' %}{{i.user}}"><h5 class="card-title">{{i.full_name}}</h5></a>
               
             </div>
           </div>

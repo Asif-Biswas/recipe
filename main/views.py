@@ -56,3 +56,7 @@ def tags(request):
 def chefs(request):
     chefList = UserProfile.objects.all()
     return render(request, 'main/chefs.html', {"chefs" : chefList})
+def tagsearch(request, tag):
+    tag_ob = Tag.objects.get(name=tag)
+    recipes = Recipe.objects.filter(tags=tag_ob)
+    return render(request, 'main/tagsearch.html', {'recipes' : recipes, 'tag':tag})

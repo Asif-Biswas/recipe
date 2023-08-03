@@ -8,7 +8,7 @@
     <div class="mt-3">
         {% for i in tags %}
         <div class="border p-2 col-2 my-1 text-center" style="text-transform: capitalize;" >
-            <a href="">{{i.name}}</a>
+            <a href="{% url 'main:tags' %}/{{i.name}}">{{i.name}}</a>
         </div>
         {% endfor %}
     </div>
