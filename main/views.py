@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import RecipeForm
-from .models import Tag, Recipe
+from .models import Tag, Recipe, UserProfile
 from django.shortcuts import get_object_or_404
-from account.models import UserProfile
 
 # Create your views here.
 
@@ -49,7 +48,6 @@ def create(request):
     return render(request, 'main/create.html', {'form': form, 'tags': tags})
 
 
-
 def tags(request):
     tagList = Tag.objects.all()
 
@@ -58,3 +56,7 @@ def tags(request):
 def chefs(request):
     chefList = UserProfile.objects.all()
     return render(request, 'main/chefs.html', {"chefs" : chefList})
+def tagsearch(request, tag):
+    tag_ob = Tag.objects.get(name=tag)
+    recipes = Recipe.objects.filter(tags=tag_ob)
+    return render(request, 'main/tagsearch.html', {'recipes' : recipes, 'tag':tag})
