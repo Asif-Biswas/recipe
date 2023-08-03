@@ -1,0 +1,35 @@
+{% extends 'includes/base.html' %}
+{% load static %}
+{% block body %}
+
+
+<div style="width: 100%; max-width: 825px; margin: auto;" class=" p-3 mb-5  ">
+    <!-- <h1 class="mx-md-n5">Available Tags</h1> -->
+    <div class="mt-3">
+        <section class="wrapper product" style="width: 100%; margin: 0 16px; justify-content: start">
+            <h2 class="section-name" style="text-align: left; color: black; margin-bottom: 12px; margin-left: 8px">{{tag}}</h2>
+            {% for recipe in recipes %}
+                <article class="card featuredd" onclick="window.location.href='{% url 'main:details' recipe.id %}'" style="cursor: pointer;">
+                    <div class="box"><img style="height: 145px; min-width: 218px;" src="{{recipe.image.url}}"></div>
+                    <header class="card-content">
+                        {% for tag in recipe.tags.all %}
+                            <span class="card-category chicken">{{tag.name}}</span>
+                        {% endfor %}
+                        <span class="card-header">{{recipe.subject|truncatechars:30}}</span>
+                        <span class="card-desc">{{recipe.description|truncatechars:80}}</span>
+                    </header>
+                    <footer class="card-content d-flex justify-content-between">
+                        <div class="contributor"><span class="contributor-name">by <a href="#">{{recipe.created_by.username}}</a></span></div>
+                        <div class="bookmark"><i class="far fa-heart me-1"></i>4</div>
+                    </footer>
+                </article>
+            {% endfor %}
+        </section>
+    </div>
+    
+</div>
+
+
+
+
+{% endblock %}
