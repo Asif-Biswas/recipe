@@ -5,11 +5,11 @@
 
 <div style="width: 100%; max-width: 825px; margin: auto;" class=" p-3 mb-5  ">
     <h1 class="mx-md-n5">Available Tags</h1>
-    <div class="mt-3">
+    <div class="mt-3 d-flex flex-wrap">
         {% for i in tags %}
-        <div class="border p-2 col-2 my-1 text-center" style="text-transform: capitalize;" >
-            <a href="{% url 'main:tags' %}/{{i.name}}">{{i.name}}</a>
-        </div>
+            <div class="border p-2 col-2 m-1 text-center" style="text-transform: capitalize;" >
+                <a href="{% url 'main:tags' i.name %}">{{i.name}}</a>
+            </div>
         {% endfor %}
     </div>
     

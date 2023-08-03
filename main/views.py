@@ -7,12 +7,11 @@ from django.shortcuts import get_object_or_404
 # Create your views here.
 
 def home(request):
-    recipes = Recipe.objects.filter(is_private=False)
+    recipes = Recipe.objects.filter(is_private=False).order_by('?')[:20]
     return render(request, 'main/home.html', {'recipes': recipes})
 
 
 def details(request, id):
-    # get or 404
     recipe = get_object_or_404(Recipe, id=id)
     return render(request, 'main/details.html', {'recipe': recipe})
 
@@ -50,13 +49,21 @@ def create(request):
 
 def tags(request):
     tagList = Tag.objects.all()
-
     return render(request, 'main/tags.html', {'tags': tagList})
+
 
 def chefs(request):
     chefList = UserProfile.objects.all()
     return render(request, 'main/chefs.html', {"chefs" : chefList})
+
+
 def tagsearch(request, tag):
     tag_ob = Tag.objects.get(name=tag)
-    recipes = Recipe.objects.filter(tags=tag_ob)
+    recipes = Recipe.objects.filter(tags=tag_ob, is_private=False)
+    return render(request, 'main/tagsearch.html', {'recipes' : recipes, 'tag':tag})
+
+
+def all_recipes(request):
+    recipes = Recipe.objects.filter(is_private=False)
+    tag = 'All Recipes'
     return render(request, 'main/tagsearch.html', {'recipes' : recipes, 'tag':tag})

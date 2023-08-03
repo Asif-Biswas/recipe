@@ -39,7 +39,7 @@
                 <span>Tags</span>
                 <ul>
                     {% for tag in recipe.tags.all %}
-                        <li><a rel="tag" href="#">
+                        <li><a rel="tag" href="{% url 'main:tags' tag.name %}">
                             {{tag.name}}
                         </a></li>
                     {% endfor %}

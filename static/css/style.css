@@ -195,7 +195,7 @@ article header {
 	border-top-right-radius: 5px;
 }
 .card-content {
-	padding: 0.8em;
+	padding: 4px;
 	display: inline-block;
 	text-align: left;
 	margin: auto;
@@ -213,7 +213,6 @@ article header {
 	border-radius: 2px;
 }
 .card-desc {
-	font-size: 13px;
 	display: block;
 }
 .card-header {
@@ -221,7 +220,30 @@ article header {
 	text-transform: capitalize;
 	font-size: 18px;
 	display: block;
+	padding: 6px;
 }
+
+@media screen and (max-width: 768px) {
+	.card-header {
+		font-size: 14px;
+	}
+	.card-desc {
+		font-size: 11px;
+	}
+}
+
+@media screen and (min-width: 768px) {
+	.card-header {
+		font-size: 18px;
+	}
+	.card-desc {
+		font-size: 13px;
+	}
+}
+	
+	
+
+
 .contributor {
 	display: block;
 }
@@ -339,7 +361,7 @@ button:hover {
 	}
 /*---ARTICLE---*/
 	article {
-		width: 40vw;
+		width: 45vw;
 	}
 }
 
@@ -422,3 +444,10 @@ button:hover {
 	}
 }
 
+
+.box{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+}
