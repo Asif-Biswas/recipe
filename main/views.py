@@ -4,6 +4,7 @@ from .forms import RecipeForm
 from .models import Tag, Recipe, UserProfile
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
+from django.db.models import Q
 
 # Create your views here.
 
@@ -67,7 +68,7 @@ def tagsearch(request, tag):
 
 
 def all_recipes(request):
-    recipes = Recipe.objects.filter(is_private=False).order_by('-liked_by')
+    recipes = Recipe.objects.filter(is_private=False).order_by('-liked_by')[:100]
     tag = 'All Recipes'
     return render(request, 'main/tagsearch.html', {'recipes' : recipes, 'tag':tag})
 
@@ -82,3 +83,9 @@ def like(request, id):
     else:
         recipe.liked_by.add(request.user)
     return redirect('main:details', id=id)
+
+
+def search(request):
+    query = request.GET.get('query')
+    recipes = Recipe.objects.filter(Q(subject__icontains=query) | Q(description__icontains=query) | Q(tags__name__icontains=query), is_private=False).distinct().order_by('-liked_by')
+    return render(request, 'main/tagsearch.html', {'recipes': recipes, 'tag': query})
