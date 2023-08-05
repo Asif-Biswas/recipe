@@ -86,7 +86,7 @@
                     </header>
                     <footer class="card-content d-flex justify-content-between">
                         <div class="contributor"><span class="contributor-name">by <a href="#">{{recipe.created_by.username}}</a></span></div>
-                        <div class="bookmark"><i class="far fa-heart me-1"></i>4</div>
+                        <div class="bookmark"><i class="far fa-heart me-1"></i>{{recipe.liked_by.all.count}}</div>
                     </footer>
                 </article>
             {% endfor %}

@@ -411,7 +411,7 @@ def userProfile(request, username):
     context = {
         'userProfile': userProfile,
         'title': 'Profile',
-        'recipes': Recipe.objects.filter(created_by=request.user)
+        'recipes': Recipe.objects.filter(created_by=request.user, is_private=False).order_by('-liked_by'),
     }
     return render(request, 'account/profile.html', context)
 

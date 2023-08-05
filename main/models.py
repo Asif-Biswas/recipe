@@ -7,9 +7,6 @@ from account.models import UserProfile
     
 
 class Tag(models.Model):
-    """
-    This is a table for storing tags.
-    """
     name = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -19,9 +16,6 @@ class Tag(models.Model):
     
 
 class Recipe(models.Model):
-    """
-    This is a table for storing recipes.
-    """
     subject = models.CharField(max_length=100)
     image = models.ImageField(upload_to='recipe_images', blank=True)
     description = models.TextField(blank=True)

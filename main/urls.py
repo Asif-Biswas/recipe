@@ -11,4 +11,5 @@ urlpatterns = [
     path('tags/<str:tag>', views.tagsearch, name='tags'),
     path('chefs', views.chefs, name='chefs'),
     path('all-recipes', views.all_recipes, name='all_recipes'),
+    path('like/<int:id>/', views.like, name='like'),
 ]

@@ -14,10 +14,10 @@
         <div class="cs-post-title">
             <div class="cs-author">
                 <figure>
-                    <a href=""><img width="32" height="32" {% if recipe.user_profile.profile_picture %}src="{{recipe.user_profile.profile_picture}}" {% else %}src="{% static 'images/cheficon.png' %}" {% endif %} class="avatar avatar-32 photo" alt=""></a>
+                    <a href="{% url 'account:profile' recipe.created_by.username %}"><img width="32" height="32" {% if recipe.user_profile.profile_picture %}src="{{recipe.user_profile.profile_picture}}" {% else %}src="{% static 'images/cheficon.png' %}" {% endif %} class="avatar avatar-32 photo" alt=""></a>
                 </figure>
                 <div class="cs-text">
-                    <a href="">{{recipe.user_profile.full_name}} <span style="font-size: 12px; color: gray;">@{{recipe.created_by.username}}</span></a>
+                    <a href="{% url 'account:profile' recipe.created_by.username %}">{{recipe.user_profile.full_name}} <span style="font-size: 12px; color: gray;">@{{recipe.created_by.username}}</span></a>
                 </div>
             </div>
             <div class="post-option">
@@ -26,7 +26,16 @@
                     <i class="far fa-calendar-alt"></i>
                     {{recipe.created_at|date:"F d, Y"}}
                 </a></span>
-                <span class="post-comment"><a href="#"><i class="fas fa-heart"></i>{{recipe.liked_by.all.count}} Likes</a></span>
+                <span class="post-comment">
+                    <a href="{% url 'main:like' recipe.id %}">
+                        {% if request.user in recipe.liked_by.all %}
+                            <i class="text-danger like-btn fas fa-heart"></i>
+                        {% else %}
+                            <i class="text-danger like-btn far fa-heart"></i>
+                        {% endif %}
+                        {{recipe.liked_by.all.count}} Likes
+                    </a>
+                </span>
             </div>
         </div>
         <div class="cs-post-option-panel">

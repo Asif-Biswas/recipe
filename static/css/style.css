@@ -1,3 +1,4 @@
+
 @charset "utf-8";
 /* CSS Document */
 
@@ -91,7 +92,7 @@ h2 {
 	height: 50vh;
 	margin: auto;
 	display: block;
-	background-image: url(https://static.pexels.com/photos/76093/pexels-photo-76093.jpeg);
+	/* background-image: url(https://static.pexels.com/photos/76093/pexels-photo-76093.jpeg); */
 	background-position: top;
 	background-size: cover;
 	background-attachment: fixed;

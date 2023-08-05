@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import RecipeForm
 from .models import Tag, Recipe, UserProfile
 from django.shortcuts import get_object_or_404
+from django.contrib import messages
 
 # Create your views here.
 
@@ -59,11 +60,25 @@ def chefs(request):
 
 def tagsearch(request, tag):
     tag_ob = Tag.objects.get(name=tag)
-    recipes = Recipe.objects.filter(tags=tag_ob, is_private=False)
+    # order by liked_by count
+    recipes = Recipe.objects.filter(tags=tag_ob, is_private=False).order_by('-liked_by')
+
     return render(request, 'main/tagsearch.html', {'recipes' : recipes, 'tag':tag})
 
 
 def all_recipes(request):
-    recipes = Recipe.objects.filter(is_private=False)
+    recipes = Recipe.objects.filter(is_private=False).order_by('-liked_by')
     tag = 'All Recipes'
     return render(request, 'main/tagsearch.html', {'recipes' : recipes, 'tag':tag})
+
+
+def like(request, id):
+    if not request.user.is_authenticated:
+        messages.error(request, 'You need to login to like a recipe')
+        return redirect('account:login')
+    recipe = get_object_or_404(Recipe, id=id)
+    if request.user in recipe.liked_by.all():
+        recipe.liked_by.remove(request.user)
+    else:
+        recipe.liked_by.add(request.user)
+    return redirect('main:details', id=id)
