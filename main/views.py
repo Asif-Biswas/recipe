@@ -41,6 +41,8 @@ def create(request):
         if tags:
             tags = tags.split(',')
             for tag in tags:
+                if not len(tag) > 1:
+                    continue
                 tag = tag.strip()
                 tag_obj, created = Tag.objects.get_or_create(name=tag)
                 recipe.tags.add(tag_obj)
