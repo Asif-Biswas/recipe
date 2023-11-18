@@ -8,6 +8,9 @@ from django.db.models import Q
 
 # Create your views here.
 
+def test(request):
+    return render(request, 'main/test.html')
+
 def home(request):
     recipes = Recipe.objects.filter(is_private=False).order_by('?')[:20]
     return render(request, 'main/home.html', {'recipes': recipes})
