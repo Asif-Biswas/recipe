@@ -314,7 +314,7 @@ def resetPassword(request):
 
 @login_required(login_url='account:login')
 def profile(request):
-    userProfile = UserProfile.objects.get(user=request.user)
+    userProfile, created = UserProfile.objects.get_or_create(user=request.user)
     context = {
         'profilePage': True,
         'title': 'Profile',
@@ -407,7 +407,7 @@ def editProfile(request):
 
 def userProfile(request, username):
     user = User.objects.get(username=username)
-    userProfile = UserProfile.objects.get(user=user)
+    userProfile, created = UserProfile.objects.get_or_create(user=user)
     context = {
         'userProfile': userProfile,
         'title': 'Profile',
